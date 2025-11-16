@@ -1,10 +1,10 @@
-import 'dotenv/config';
-import express from 'express';
-import cors from 'cors';
-import { clerkMiddleware } from '@clerk/express';
-import connectToMongo from './db.js';
-import userRouter from './routes/user.js';
-import adminRouter from './routes/admin.js';
+import "dotenv/config";
+import express from "express";
+import cors from "cors";
+import { clerkMiddleware } from "@clerk/express";
+import connectToMongo from "./db.js";
+import userRouter from "./routes/user.js";
+import adminRouter from "./routes/admin.js";
 
 connectToMongo();
 
@@ -14,24 +14,30 @@ const port = process.env.PORT || 5000;
 const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:8080",
-  "https://the-pizza-unlimited-client-frontend-three.vercel.app/",
+  "https://the-pizza-unlimited-client-frontend-three.vercel.app",
   process.env.ADMIN_URL,
-  "https://azurewebsites.net"
-].filter(Boolean); // ⬅ REMOVE undefined
+].filter(Boolean);
 
 app.use(
   cors({
-    origin: allowedOrigins,
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      return callback(new Error("CORS blocked"), false);
+    },
     credentials: true,
+    methods: "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+    allowedHeaders: "Content-Type,Authorization",
   })
 );
+
+app.options("*", cors());
 
 app.use(express.json());
 app.use(clerkMiddleware());
 
-app.use('/api', userRouter);
-app.use('/api/admin', adminRouter);
+app.use("/api", userRouter);
+app.use("/api/admin", adminRouter);
 
 app.listen(port, () => {
   console.log(`🚀 Server running at http://localhost:${port}`);
