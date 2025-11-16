@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const MenuCategorySchema = new mongoose.Schema({
   name: String,
@@ -29,4 +29,4 @@ MenuCategorySchema.post('findOneAndUpdate', async function (doc) {
 
 });
 
-module.exports = mongoose.model('MenuCategory', MenuCategorySchema);
+export default mongoose.model('MenuCategory', MenuCategorySchema);

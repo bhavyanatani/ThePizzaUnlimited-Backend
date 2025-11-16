@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const CartSchema = new mongoose.Schema({
   userId: { type: String, required: true }, // Clerk user ID
@@ -13,4 +13,4 @@ const CartSchema = new mongoose.Schema({
   updatedAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model('Cart', CartSchema);
+export default mongoose.model('Cart', CartSchema);
