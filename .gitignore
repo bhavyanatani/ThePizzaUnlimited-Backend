@@ -50,6 +50,3 @@ Thumbs.db
 package-lock.json
 pnpm-lock.yaml
 yarn.lock
-
-# Uploaded images (OPTIONAL — if you don't want to push images)
-photos/
