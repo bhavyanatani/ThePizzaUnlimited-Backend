@@ -15,7 +15,7 @@ const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:8080",
   "https://the-pizza-unlimited-client-frontend-three.vercel.app",
-  process.env.ADMIN_URL,
+  "https://the-pizza-unlimited-admin-frontend.vercel.app"
 ].filter(Boolean);
 
 app.use(
